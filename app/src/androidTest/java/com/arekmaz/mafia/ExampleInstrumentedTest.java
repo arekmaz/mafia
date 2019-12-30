@@ -1,4 +1,4 @@
-package com.example.mafia;
+package com.arekmaz.mafia;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.mafia", appContext.getPackageName());
+        assertEquals("com.example.com.arekmaz.mafia", appContext.getPackageName());
     }
 }

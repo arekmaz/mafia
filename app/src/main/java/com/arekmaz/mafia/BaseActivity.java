@@ -1,4 +1,4 @@
-package com.example.mafia;
+package com.arekmaz.mafia;
 
 import android.content.Context;
 import android.content.SharedPreferences;

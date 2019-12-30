@@ -1,4 +1,4 @@
-package com.example.mafia.activities;
+package com.arekmaz.mafia.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 
-import com.example.mafia.BaseActivity;
-import com.example.mafia.R;
-import com.example.mafia.enums.AppMode;
+import com.arekmaz.mafia.BaseActivity;
+import com.arekmaz.mafia.R;
+import com.arekmaz.mafia.enums.AppMode;
 
 public class ModeChooserActivity extends BaseActivity {
 

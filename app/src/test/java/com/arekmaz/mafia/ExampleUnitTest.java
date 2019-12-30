@@ -1,4 +1,4 @@
-package com.example.mafia;
+package com.arekmaz.mafia;
 
 import org.junit.Test;
 

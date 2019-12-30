@@ -1,4 +1,4 @@
-package com.example.mafia.activities;
+package com.arekmaz.mafia.activities;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,8 +7,8 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 
-import com.example.mafia.BaseActivity;
-import com.example.mafia.R;
+import com.arekmaz.mafia.BaseActivity;
+import com.arekmaz.mafia.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.example.mafia.enums;
+package com.arekmaz.mafia.enums;
 
 public enum AppMode {
     HOST("HOST"),
