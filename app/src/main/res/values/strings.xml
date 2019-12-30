@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Mafia</string>
-    <string name="clientButtonString">Klijęt</string>
+    <string name="host_game_label">Utwórz grę</string>
+    <string name="join_game_label">Dołącz do gry</string>
+
 </resources>

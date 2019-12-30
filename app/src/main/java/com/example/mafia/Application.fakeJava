@@ -1,0 +1,38 @@
+package com.example.mafia;
+
+
+import com.example.mafia.enums.AppMode;
+
+public class Application extends android.app.Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        wybierzTryb() // host lub gracz
+        .potem(appMode => {
+            switch(appMode) {
+                case AppMode.HOST:
+                    obsluzHosta();
+                    break;
+                case AppMode.PLAYER:
+                default:
+                    obsluzGoscia();
+                    break;
+            }
+        });
+    }
+
+    void obsluzHosta() {
+        skonfigurujPokoj().potem(() -> {
+            zarzadzajProjektem();
+        });
+    }
+
+    void obsluzGoscia() {
+        ustalNick().potem(() -> {
+            wybierzPokoj().potem(() -> {
+                pokazRole();
+            });
+        });
+    }
+}
