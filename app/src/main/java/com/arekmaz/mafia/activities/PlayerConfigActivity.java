@@ -53,6 +53,11 @@ public class PlayerConfigActivity extends BaseActivity {
             return;
         }
         saveUserName();
+        launchShowGameCharacterActivity();
+    }
+
+    private void launchShowGameCharacterActivity() {
+        startActivity(ShowGameCharacter.class);
     }
 
     private void saveUserName() {

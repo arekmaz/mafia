@@ -1,7 +1,5 @@
 package com.arekmaz.mafia.activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -43,11 +41,6 @@ public class ModeChooserActivity extends BaseActivity {
 
     private void startRoomSetupActivity() {
         startActivity(RoomSetupActivity.class);
-    }
-
-    private <A extends Activity> void startActivity(Class<A> activityClass) {
-        Intent intent = new Intent(this, activityClass);
-        startActivity(intent);
     }
 
     private void setup() {
