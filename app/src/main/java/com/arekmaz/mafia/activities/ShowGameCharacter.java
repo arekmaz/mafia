@@ -21,7 +21,7 @@ public class ShowGameCharacter extends BaseActivity {
 
     private String mCharacterDisplayText = "Mafia";
 
-    private CardSide mCardSide = CardSide.AVERS;
+    private CardSide mCardSide = CardSide.REVERS;
 
     private enum CardSide {
         AVERS,
@@ -40,14 +40,14 @@ public class ShowGameCharacter extends BaseActivity {
     private void setup() {
 
         TextView characterTextView = mCharacterDisplayCl.findViewById(R.id.tv_character_text);
-
+        String reverseText = getString(R.string.character_card_reverse_content);
         mCharacterDisplayCl.setOnClickListener(v -> {
             if (!mIsViewRotating) {
                 mIsViewRotating = true;
                 float currentAngle = v.getRotationY();
                 float rotateTo = (currentAngle + 180) % 360;
                 if (mCardSide == CardSide.AVERS) {
-                    characterTextView.setText("Naciśnij aby odwrócić");
+                    characterTextView.setText(reverseText);
                 } else {
                     characterTextView.setText("Postać: " + mCharacterDisplayText);
                 }
