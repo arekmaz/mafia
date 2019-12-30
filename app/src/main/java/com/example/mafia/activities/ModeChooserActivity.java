@@ -1,5 +1,7 @@
 package com.example.mafia.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -22,8 +24,30 @@ public class ModeChooserActivity extends AppCompatActivity {
         bindViews();
         setup();
     }
-    private void onModeChosen(AppMode mode) {
 
+    private void onModeChosen(AppMode mode) {
+        switch(mode) {
+            case HOST:
+                startRoomSetupActivity();
+                break;
+            case PLAYER:
+                startPlayerConfigActivity();
+                break;
+        }
+    }
+
+    private void startPlayerConfigActivity() {
+        startActivity(PlayerConfigActivity.class);
+    }
+
+
+    private void startRoomSetupActivity() {
+        startActivity(RoomSetupActivity.class);
+    }
+
+    private <A extends Activity> void startActivity(Class<A> activityClass) {
+        Intent intent = new Intent(this, activityClass);
+        startActivity(intent);
     }
 
     private void setup() {
