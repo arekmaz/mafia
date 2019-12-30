@@ -1,6 +1,7 @@
 package com.example.mafia.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-public class RoomSetupActivity extends AppCompatActivity {
+import com.example.mafia.BaseActivity;
+
+public class RoomSetupActivity extends BaseActivity {
 }

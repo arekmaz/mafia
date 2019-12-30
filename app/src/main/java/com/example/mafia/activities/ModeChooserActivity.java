@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mafia.BaseActivity;
 import com.example.mafia.R;
 import com.example.mafia.enums.AppMode;
 
-public class ModeChooserActivity extends AppCompatActivity {
+public class ModeChooserActivity extends BaseActivity {
 
     private Button mChooseHostModeBt;
     private Button mChoosePlayerModeBt;

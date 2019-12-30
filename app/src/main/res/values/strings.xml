@@ -2,5 +2,8 @@
     <string name="app_name">Mafia</string>
     <string name="host_game_label">Utwórz grę</string>
     <string name="join_game_label">Dołącz do gry</string>
-
+    <string name="player_config_name_label">Wybierz nick</string>
+    <string name="go_back_label">Wstecz</string>
+    <string name="go_forward_label">Dalej</string>
+    <string name="user_name_required_error_message">Nick wymagany</string>
 </resources>
