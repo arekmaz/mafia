@@ -7,4 +7,6 @@
     <string name="go_forward_label">Dalej</string>
     <string name="user_name_required_error_message">Nick wymagany</string>
     <string name="character_card_reverse_content">Naciśnij aby odwrócić</string>
+    <string name="enable_hotspot">Włącz hotspot zanim stworzysz grę</string>
+    <string name="enable_wifi">Włącz WiFi i dołącz do sieci gospodarza przed próbą dołączenia do gry</string>
 </resources>

@@ -1,13 +1,21 @@
 package com.arekmaz.mafia.activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.arekmaz.mafia.BaseActivity;
 import com.arekmaz.mafia.R;
 import com.arekmaz.mafia.enums.AppMode;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class ModeChooserActivity extends BaseActivity {
 
@@ -26,10 +34,20 @@ public class ModeChooserActivity extends BaseActivity {
     private void onModeChosen(AppMode mode) {
         switch(mode) {
             case HOST:
-                startRoomSetupActivity();
+                if(checkIfHotspotIsOn()){
+                    startRoomSetupActivity();
+                }
+                else {
+                    showNotCancellableAlert(getResources().getString(R.string.enable_hotspot));
+                }
                 break;
             case PLAYER:
-                startPlayerConfigActivity();
+                if(checkIfWifiIsOn()){
+                    startPlayerConfigActivity();
+                }
+                else {
+                    showNotCancellableAlert(getResources().getString(R.string.enable_wifi));
+                }
                 break;
         }
     }
@@ -53,10 +71,34 @@ public class ModeChooserActivity extends BaseActivity {
         });
     }
 
-
     private void bindViews() {
         mChooseHostModeBt = findViewById(R.id.bt_choose_host_mode);
         mChoosePlayerModeBt = findViewById(R.id.bt_choose_player_mode);
+    }
+
+    private boolean checkIfHotspotIsOn(){
+        WifiManager wifimanager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        try {
+            Method method = wifimanager.getClass().getDeclaredMethod("isWifiApEnabled");
+            method.setAccessible(true);
+            return (Boolean) method.invoke(wifimanager);
+        }
+        catch (Throwable ignored) {}
+        return false;
+    }
+
+    private boolean checkIfWifiIsOn(){
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        return wifiManager.isWifiEnabled();
+    }
+
+    private void showNotCancellableAlert(String error){
+        AlertDialog.Builder l_dialog = new AlertDialog.Builder(this);
+        l_dialog.setTitle("Błąd!");
+        l_dialog.setMessage(error);
+        l_dialog.setCancelable(false);
+        l_dialog.setPositiveButton("Ok", (DialogInterface.OnClickListener)(a,b) -> {});
+        l_dialog.show();
     }
 
 
