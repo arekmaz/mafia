@@ -2,6 +2,7 @@ package com.arekmaz.mafia.activities;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,7 +21,7 @@ public class PlayerConfigActivity extends BaseActivity {
     private Button mBackBt;
     private Button mGoForwardBt;
 
-    private static final String USER_NAME_SP_KEY = "USER_NAME";
+    public static final String USER_NAME_SP_KEY = "USER_NAME";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -3,6 +3,7 @@ package com.arekmaz.mafia.activities;
 
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -16,10 +17,11 @@ import java.util.regex.Pattern;
 
 public class RoomSetupActivity extends BaseActivity {
 
+    public static final String ROOM_NAME_SP_KEY = "ROOM_NAME";
+    public static final String ROOM_POPULATION_SP_KEY = "ROOM_POPULATION";
+
     private static final int MIN_PLAYERS = 6;
     private static final int MAX_PLAYERS = 30;
-    private static final String ROOM_NAME_SP_KEY = "ROOM_NAME";
-    private static final String ROOM_POPULATION_SP_KEY = "ROOM_POPULATION";
 
     private TextInputLayout mRoomNameTil;
     private TextInputLayout mRoomPopulationTil;

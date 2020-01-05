@@ -9,4 +9,7 @@
     <string name="character_card_reverse_content">Naciśnij aby odwrócić</string>
     <string name="room_name_label">Nazwa pokoju</string>
     <string name="room_population_label">Liczba graczy</string>
+    <string name="room_header_content_tpl">Pokój: {{roomName}}</string>
+    <string name="app_shared_prefs_file_name">com.arekmaz.mafia</string>
+    <string name="room_info_content_tpl">Aktywni gracze: {{playersCount}}/{{roomPopulation}}</string>
 </resources>

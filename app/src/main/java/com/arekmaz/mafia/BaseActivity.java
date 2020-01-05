@@ -1,6 +1,7 @@
 package com.arekmaz.mafia;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,11 +12,20 @@ import androidx.core.app.ActivityCompat;
 
 public class BaseActivity extends AppCompatActivity {
 
+    private SharedPreferences getAppScopeSharedPreferences() {
+        return getSharedPreferences(getString(R.string.app_shared_prefs_file_name), Context.MODE_PRIVATE);
+    }
+
     protected void writePref(String key, String value) {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getAppScopeSharedPreferences();
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(key, value);
         editor.apply();
+    }
+
+    protected String getAllPrefs() {
+        SharedPreferences sharedPref = getAppScopeSharedPreferences();
+        return sharedPref.getAll().toString();
     }
 
     protected String getPref(String key) {
@@ -23,7 +33,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected String getPref(String key, String defaultVal) {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getAppScopeSharedPreferences();
         return sharedPref.getString(key, defaultVal);
     }
 
