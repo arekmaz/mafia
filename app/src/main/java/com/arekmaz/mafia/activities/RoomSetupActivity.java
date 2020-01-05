@@ -122,11 +122,11 @@ public class RoomSetupActivity extends BaseActivity {
                 return true;
             }
             mRoomPopulationTil.setError(
-                String.format("Liczba graczy musi być pomiędzy %s, a %s", MIN_PLAYERS, MAX_PLAYERS)
+                String.format(getString(R.string.room_population_bounds_validation_message), MIN_PLAYERS, MAX_PLAYERS)
             );
             return false;
         } catch(NumberFormatException e) {
-            mRoomPopulationTil.setError("Liczba graczy wymagana");
+            mRoomPopulationTil.setError(getString(R.string.room_population_not_numeric_validation_message));
             return false;
         }
     }
@@ -134,7 +134,7 @@ public class RoomSetupActivity extends BaseActivity {
     private boolean validateRoomName() {
         String roomName = Objects.requireNonNull(mRoomNameTil.getEditText()).getText().toString();
         if (roomName.isEmpty()) {
-            mRoomNameTil.setError("Nazwa pokoju wymagana");
+            mRoomNameTil.setError(getString(R.string.room_name_required_validation_message));
             return false;
         }
         return true;
