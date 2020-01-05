@@ -30,6 +30,7 @@
             android:parentActivityName="com.arekmaz.mafia.activities.ModeChooserActivity"
             />
         <activity android:name=".activities.ShowGameCharacter" />
+        <activity android:name=".activities.RoomControlActivity" />
     </application>
 
 </manifest>

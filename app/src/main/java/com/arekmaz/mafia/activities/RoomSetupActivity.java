@@ -3,8 +3,6 @@ package com.arekmaz.mafia.activities;
 
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.Spanned;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -86,6 +84,11 @@ public class RoomSetupActivity extends BaseActivity {
             return;
         }
         saveRoomConfig();
+        launchRoomControlActivity();
+    }
+
+    private void launchRoomControlActivity() {
+        startActivity(RoomControlActivity.class);
     }
 
     private void saveRoomConfig() {
