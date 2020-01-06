@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.arekmaz.mafia.BaseActivity;
 import com.arekmaz.mafia.R;
 import com.arekmaz.mafia.adapters.PlayerViewAdapter;
+import com.arekmaz.mafia.entity.Player;
 
 import static com.arekmaz.mafia.activities.RoomSetupActivity.ROOM_NAME_SP_KEY;
 import static com.arekmaz.mafia.activities.RoomSetupActivity.ROOM_POPULATION_SP_KEY;
@@ -20,6 +21,10 @@ public class RoomControlActivity extends BaseActivity {
     private RecyclerView mPlayersRv;
     private TextView mRoomHeaderTv;
     private TextView mRoomInfoTv;
+
+    public interface PlayerActionsCallbacks {
+        void onPlayerAdded(Player newPlayer);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

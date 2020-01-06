@@ -2,48 +2,46 @@ package com.arekmaz.mafia.network;
 
 import android.util.Log;
 
-import com.arekmaz.mafia.activities.LiveRoomActivity;
-import com.arekmaz.mafia.activities.RoomSetupActivity;
+import com.arekmaz.mafia.activities.RoomControlActivity;
+import com.arekmaz.mafia.entity.Player;
+import com.arekmaz.mafia.enums.Role;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.UnknownHostException;
+import java.util.Observable;
+import java.util.Observer;
+
 
 public class Connector {
-    private final static String TAG = "Connector";
     private final static String HOST_ADDRESS = "192.168.43.1";
     private final static int PORT = 13378;
 
-    public static void gatherClients(int maxNoClients, LiveRoomActivity.NetworkObserver observer){
-        Log.i(TAG, "Server starting...");
-        new Thread(() -> {
-        int clientsCounter = 0;
-            try(ServerSocket server = new ServerSocket(PORT, 50, InetAddress.getByName(HOST_ADDRESS))){
-                Log.i(TAG, "Server started.");
-                while(clientsCounter <= maxNoClients){
+    public static Thread initServerThread(RoomControlActivity.PlayerActionsCallbacks callbacks) {
+        Thread serverThread = createThread(callbacks);
+        return serverThread;
+    }
+
+    private static Thread createThread(RoomControlActivity.PlayerActionsCallbacks callbacks) {
+        return new Thread(() -> {
+            try (ServerSocket server = new ServerSocket(PORT, 50, InetAddress.getByName(HOST_ADDRESS))) {
+                while (true) {
                     Socket client = server.accept();
-                    if(client != null){
-                        clientsCounter++;
-                        InetAddress clientAddress = client.getInetAddress();
-                        Log.i(TAG, clientAddress.toString() + " connected.");
+                    if (client != null) {
                         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                        String message = in.readLine();
-                        Log.i(TAG, "Client:" + clientAddress.toString() + " :" + message);
-                        observer.update(clientAddress, message);
+                        String newPlayerNick = in.readLine();
+                        callbacks.onPlayerAdded(new Player(newPlayerNick, Role.CITIZEN));
                         in.close();
                         client.close();
                     }
                 }
-                Log.i(TAG, "Queue full.");
-            }
-            catch (Exception e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
     }
 }
