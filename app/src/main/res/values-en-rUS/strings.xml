@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mafia</string>
+    <string name="character_card_reverse_content">Click to reverse</string>
+    <string name="go_back_label">Back</string>
+    <string name="go_forward_label">Next</string>
+    <string name="host_game_label">Create room</string>
+    <string name="join_game_label">Join room</string>
+    <string name="player_config_name_label">Choose a nick</string>
+    <string name="room_header_content_tpl">Room: {{roomName}}</string>
+    <string name="room_info_content_tpl">Active players: {{playersCount}}</string>
+    <string name="room_name_label">Room name</string>
+    <string name="room_population_label">Room population</string>
+    <string name="user_name_required_error_message">Nick required</string>
+    <string name="room_name_required_validation_message">Room name required</string>
+    <string name="room_population_bounds_validation_message">Room population must be between %s and %s</string>
+    <string name="room_population_not_numeric_validation_message">Room population must consist of digits only</string>
+</resources>

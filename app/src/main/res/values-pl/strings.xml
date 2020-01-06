@@ -3,21 +3,15 @@
     <string name="host_game_label">Utwórz grę</string>
     <string name="join_game_label">Dołącz do gry</string>
     <string name="player_config_name_label">Wybierz nick</string>
-    <string name="go_back_label">Wstecz</string>
+    <string name="go_back_label">Wtecz</string>
     <string name="go_forward_label">Dalej</string>
     <string name="user_name_required_error_message">Nick wymagany</string>
     <string name="character_card_reverse_content">Naciśnij aby odwrócić</string>
-<<<<<<< HEAD
-    <string name="enable_hotspot">Włącz hotspot zanim stworzysz grę</string>
-    <string name="enable_wifi">Włącz WiFi i dołącz do sieci gospodarza przed próbą dołączenia do gry</string>
-=======
     <string name="room_name_label">Nazwa pokoju</string>
     <string name="room_population_label">Liczba graczy</string>
     <string name="room_header_content_tpl">Pokój: {{roomName}}</string>
-    <string name="app_shared_prefs_file_name" translatable="false">com.arekmaz.mafia</string>
     <string name="room_info_content_tpl">Aktywni gracze: {{playersCount}}/{{roomPopulation}}</string>
     <string name="room_name_required_validation_message">Nazwa pokoju wymagana</string>
-    <string name="room_population_not_numeric_validation_message">Liczba graczy musi składać się z samych cyfr</string>
     <string name="room_population_bounds_validation_message">Liczba graczy musi być pomiędzy %s, a %s</string>
->>>>>>> master
+    <string name="room_population_not_numeric_validation_message">Liczba graczy musi składać się z samych cyfr</string>
 </resources>
