@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.arekmaz.mafia.BaseActivity;
 import com.arekmaz.mafia.R;
 import com.arekmaz.mafia.enums.AppMode;
+import com.arekmaz.mafia.network.Connector;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,8 +28,9 @@ public class ModeChooserActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mode_chooser);
 
-        bindViews();
-        setup();
+//
+//        bindViews();
+//        setup();
     }
 
     private void onModeChosen(AppMode mode) {
