@@ -7,10 +7,8 @@
     <string name="go_forward_label">Dalej</string>
     <string name="user_name_required_error_message">Nick wymagany</string>
     <string name="character_card_reverse_content">Naciśnij aby odwrócić</string>
-<<<<<<< HEAD
     <string name="enable_hotspot">Włącz hotspot zanim stworzysz grę</string>
     <string name="enable_wifi">Włącz WiFi i dołącz do sieci gospodarza przed próbą dołączenia do gry</string>
-=======
     <string name="room_name_label">Nazwa pokoju</string>
     <string name="room_population_label">Liczba graczy</string>
     <string name="room_header_content_tpl">Pokój: {{roomName}}</string>
@@ -19,5 +17,4 @@
     <string name="room_name_required_validation_message">Nazwa pokoju wymagana</string>
     <string name="room_population_not_numeric_validation_message">Liczba graczy musi składać się z samych cyfr</string>
     <string name="room_population_bounds_validation_message">Liczba graczy musi być pomiędzy %s, a %s</string>
->>>>>>> master
 </resources>
