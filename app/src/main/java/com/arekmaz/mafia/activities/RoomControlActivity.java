@@ -12,6 +12,11 @@ import com.arekmaz.mafia.BaseActivity;
 import com.arekmaz.mafia.R;
 import com.arekmaz.mafia.adapters.PlayerViewAdapter;
 import com.arekmaz.mafia.entity.Player;
+import com.arekmaz.mafia.enums.Role;
+import com.arekmaz.mafia.network.Connector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.arekmaz.mafia.activities.RoomSetupActivity.ROOM_NAME_SP_KEY;
 import static com.arekmaz.mafia.activities.RoomSetupActivity.ROOM_POPULATION_SP_KEY;
@@ -22,8 +27,14 @@ public class RoomControlActivity extends BaseActivity {
     private TextView mRoomHeaderTv;
     private TextView mRoomInfoTv;
 
+
+    private List<Player> mPlayers = new ArrayList<>();
+    private Thread mServerThread;
+
     public interface PlayerActionsCallbacks {
         void onPlayerAdded(Player newPlayer);
+
+        Role getNextPlayerRole();
     }
 
     @Override
@@ -40,6 +51,31 @@ public class RoomControlActivity extends BaseActivity {
         setupPlayersRecyclerView();
         setupRoomName();
         setupRoomInfo();
+        setupRoomServer();
+    }
+
+    private void setupRoomServer() {
+        int maxPlayersCount = 6;
+        mServerThread =  Connector.initServerThread(
+            new PlayerActionsCallbacks() {
+                @Override
+                public void onPlayerAdded(Player newPlayer) {
+                    synchronized (RoomControlActivity.this) {
+                        mPlayers.add(newPlayer);
+                        if (mPlayers.size() >= maxPlayersCount
+                                && mServerThread != null
+                                && !mServerThread.isInterrupted()) {
+                            mServerThread.interrupt();
+                        }
+                    }
+                }
+
+                @Override
+                public Role getNextPlayerRole() {
+                    return Role.CITIZEN;
+                }
+            }
+        );
     }
 
     private void setupRoomInfo() {
