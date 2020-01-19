@@ -46,12 +46,27 @@ public class RoomControlActivity extends BaseActivity {
         setup();
     }
 
-    private void setup() {
+    @Override
+    protected void onResume() {
+        setupRoomServer();
+        super.onResume();
+    }
 
+    @Override
+    protected void onPause() {
+        stopRoomServer();
+        super.onPause();
+    }
+
+    private void stopRoomServer() {
+        mServerThread.interrupt();
+        mServerThread = null;
+    }
+
+    private void setup() {
         setupPlayersRecyclerView();
         setupRoomName();
         setupRoomInfo();
-        setupRoomServer();
     }
 
     private void setupRoomServer() {
@@ -62,6 +77,7 @@ public class RoomControlActivity extends BaseActivity {
                 public void onPlayerAdded(Player newPlayer) {
                     synchronized (RoomControlActivity.this) {
                         mPlayers.add(newPlayer);
+                        mPlayersAdapter.notifyDataSetChanged();
                         if (mPlayers.size() >= maxPlayersCount
                                 && mServerThread != null
                                 && !mServerThread.isInterrupted()) {
@@ -111,7 +127,9 @@ public class RoomControlActivity extends BaseActivity {
 
         mPlayersRv.setLayoutManager(new LinearLayoutManager(this));
 
-        mPlayersRv.setAdapter(new PlayerViewAdapter());
+        mPlayersAdapter = new PlayerViewAdapter(mPlayers);
+
+        mPlayersRv.setAdapter(mPlayersAdapter);
     }
 
     private void bindViews() {
