@@ -10,7 +10,7 @@ public enum Role {
         value = val;
     }
 
-    String getRole(){
+    public String getRole(){
         return value;
     }
 }

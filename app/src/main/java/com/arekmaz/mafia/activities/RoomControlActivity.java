@@ -30,6 +30,7 @@ public class RoomControlActivity extends BaseActivity {
 
     private List<Player> mPlayers = new ArrayList<>();
     private Thread mServerThread;
+    private PlayerViewAdapter mPlayersAdapter;
 
     public interface PlayerActionsCallbacks {
         void onPlayerAdded(Player newPlayer);
