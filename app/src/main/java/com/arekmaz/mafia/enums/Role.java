@@ -9,4 +9,8 @@ public enum Role {
     Role(String val) {
         value = val;
     }
+
+    String getRole(){
+        return value;
+    }
 }
