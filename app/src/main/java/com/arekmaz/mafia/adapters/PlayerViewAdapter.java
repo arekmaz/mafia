@@ -10,29 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arekmaz.mafia.R;
 import com.arekmaz.mafia.entity.Player;
-import com.arekmaz.mafia.enums.Role;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class PlayerViewAdapter extends RecyclerView.Adapter<PlayerViewAdapter.PlayerViewHolder> {
 
-    private List<Player> mPlayers = Arrays.asList(
-            new Player("player1", Role.CITIZEN),
-            new Player("player2", Role.CITIZEN),
-            new Player("player3", Role.CITIZEN),
-            new Player("player4", Role.CITIZEN),
-            new Player("player5", Role.MAFIA),
-            new Player("player6", Role.CITIZEN),
-            new Player("player7", Role.MAFIA),
-            new Player("player8", Role.CITIZEN),
-            new Player("player9", Role.CITIZEN),
-            new Player("player10", Role.CITIZEN),
-            new Player("player11", Role.CITIZEN),
-            new Player("player12", Role.MAFIA),
-            new Player("player13", Role.CITIZEN),
-            new Player("player14", Role.MAFIA)
-    );
+    private List<Player> mPlayers;
+
+
+    public PlayerViewAdapter(List<Player> players) {
+        mPlayers = players;
+    }
 
     @NonNull
     @Override
