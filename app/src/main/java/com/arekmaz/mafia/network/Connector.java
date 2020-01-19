@@ -33,7 +33,7 @@ public class Connector {
                     if (client != null) {
                         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                         String newPlayerNick = in.readLine();
-                        javax.management.relation.Role newPlayerRole = callbacks.getNextPlayerRole();
+                        Role newPlayerRole = callbacks.getNextPlayerRole();
                         callbacks.onPlayerAdded(new Player(newPlayerNick, newPlayerRole));
                         in.close();
                         PrintWriter out = new PrintWriter(client.getOutputStream(), true);
