@@ -13,19 +13,39 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.arekmaz.mafia.BaseActivity;
 import com.arekmaz.mafia.R;
 
+import com.arekmaz.mafia.enums.Role;
+import com.arekmaz.mafia.network.Connector;
+
+import static com.arekmaz.mafia.activities.PlayerConfigActivity.USER_NAME_SP_KEY;
+
 public class ShowGameCharacter extends BaseActivity {
 
     private ConstraintLayout mCharacterDisplayCl;
 
     private boolean mIsViewRotating = false;
 
-    private String mCharacterDisplayText = "Mafia";
+    private String mCharacterDisplayText = "Brak";
 
     private CardSide mCardSide = CardSide.REVERS;
+    private Thread mClientRoleRequestThread;
+
+
+    public void onRawCharacterRoleResult(String rawRole) {
+        mCharacterDisplayText = getString(Role.fromString(rawRole).getDisplayStringId());
+        if (mClientRoleRequestThread != null) {
+            mClientRoleRequestThread.interrupt();
+        }
+    }
 
     private enum CardSide {
         AVERS,
         REVERS
+    }
+
+    public interface GameCharacterRequestCallbacks {
+        void onRawCharacterRoleResult(String rawRole);
+
+        String getPlayerNick();
     }
 
     @Override
@@ -62,6 +82,23 @@ public class ShowGameCharacter extends BaseActivity {
                         });
             }
         });
+
+        setupRoleRequest();
+    }
+
+    private void setupRoleRequest() {
+        mClientRoleRequestThread = Connector.initClientThread(new GameCharacterRequestCallbacks() {
+            @Override
+            public void onRawCharacterRoleResult(String rawRole) {
+                ShowGameCharacter.this.onRawCharacterRoleResult(rawRole);
+            }
+
+            @Override
+            public String getPlayerNick() {
+                return getPref(USER_NAME_SP_KEY);
+            }
+        });
+        mClientRoleRequestThread.start();
     }
 
     private ViewPropertyAnimator rotateYView(View v, float angle, int duration) {

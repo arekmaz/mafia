@@ -1,5 +1,6 @@
 package com.arekmaz.mafia.adapters;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,13 @@ import java.util.List;
 
 public class PlayerViewAdapter extends RecyclerView.Adapter<PlayerViewAdapter.PlayerViewHolder> {
 
+    private final Resources mResources;
     private List<Player> mPlayers;
 
 
-    public PlayerViewAdapter(List<Player> players) {
+    public PlayerViewAdapter(List<Player> players, Resources resources) {
         mPlayers = players;
+        mResources = resources;
     }
 
     @NonNull
@@ -55,7 +58,8 @@ public class PlayerViewAdapter extends RecyclerView.Adapter<PlayerViewAdapter.Pl
 
         public void bind(Player player) {
             mNickTv.setText(player.getNick().toUpperCase());
-            mRoleTv.setText(player.getRole().value);
+            String roleDisplayValue = mResources.getString(player.getRole().getDisplayStringId());
+            mRoleTv.setText(roleDisplayValue);
         }
     }
 }

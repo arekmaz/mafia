@@ -17,4 +17,8 @@
     <string name="room_name_required_validation_message">Nazwa pokoju wymagana</string>
     <string name="room_population_not_numeric_validation_message">Liczba graczy musi składać się z samych cyfr</string>
     <string name="room_population_bounds_validation_message">Liczba graczy musi być pomiędzy %s, a %s</string>
+    <string name="mafia_role_label">Mafia</string>
+    <string name="citizen_role_label">Obywatel</string>
+    <string name="list_header_nick_label">Nick</string>
+    <string name="list_header_role_label">Rola</string>
 </resources>

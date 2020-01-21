@@ -78,7 +78,9 @@ public class RoomControlActivity extends BaseActivity {
                 public void onPlayerAdded(Player newPlayer) {
                     synchronized (RoomControlActivity.this) {
                         mPlayers.add(newPlayer);
-                        mPlayersAdapter.notifyDataSetChanged();
+                        runOnUiThread(() -> {
+                            mPlayersAdapter.notifyDataSetChanged();
+                        });
                         if (mPlayers.size() >= maxPlayersCount
                                 && mServerThread != null
                                 && !mServerThread.isInterrupted()) {
@@ -93,6 +95,7 @@ public class RoomControlActivity extends BaseActivity {
                 }
             }
         );
+        mServerThread.start();
     }
 
     private void setupRoomInfo() {
@@ -128,7 +131,7 @@ public class RoomControlActivity extends BaseActivity {
 
         mPlayersRv.setLayoutManager(new LinearLayoutManager(this));
 
-        mPlayersAdapter = new PlayerViewAdapter(mPlayers);
+        mPlayersAdapter = new PlayerViewAdapter(mPlayers, getResources());
 
         mPlayersRv.setAdapter(mPlayersAdapter);
     }
