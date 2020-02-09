@@ -54,7 +54,8 @@ public class Connector {
                         in.close();
                         out.close();
                         client.close();
-                        callbacks.onPlayerAdded(new Player(newPlayerNick, newPlayerRole));
+                        String clientIp = client.getInetAddress().toString();
+                        callbacks.onPlayerAdded(new Player(newPlayerNick, newPlayerRole, clientIp));
                     }
                 }
             } catch (IOException e) {

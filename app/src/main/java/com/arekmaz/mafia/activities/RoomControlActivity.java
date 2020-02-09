@@ -3,6 +3,7 @@ package com.arekmaz.mafia.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +17,12 @@ import com.arekmaz.mafia.enums.Role;
 import com.arekmaz.mafia.network.Connector;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 import static com.arekmaz.mafia.activities.RoomSetupActivity.ROOM_NAME_SP_KEY;
 import static com.arekmaz.mafia.activities.RoomSetupActivity.ROOM_POPULATION_SP_KEY;
@@ -72,28 +78,40 @@ public class RoomControlActivity extends BaseActivity {
 
     private void setupRoomServer() {
         int maxPlayersCount = 6;
-        mServerThread =  Connector.initServerThread(
-            new PlayerActionsCallbacks() {
-                @Override
-                public void onPlayerAdded(Player newPlayer) {
-                    synchronized (RoomControlActivity.this) {
-                        mPlayers.add(newPlayer);
-                        runOnUiThread(() -> {
-                            mPlayersAdapter.notifyDataSetChanged();
-                        });
-                        if (mPlayers.size() >= maxPlayersCount
-                                && mServerThread != null
-                                && !mServerThread.isInterrupted()) {
-                            mServerThread.interrupt();
+        mServerThread = Connector.initServerThread(
+                new PlayerActionsCallbacks() {
+                    @Override
+                    public void onPlayerAdded(Player newPlayer) {
+                        String newPlayerIp = newPlayer.getIp();
+                        Predicate<Player> playerHasIp =
+                                (player) -> player.getIp().equals(newPlayerIp);
+                        if (mPlayers.stream().anyMatch(playerHasIp)) {
+                            return;
+                        }
+                        synchronized (RoomControlActivity.this) {
+
+                            mPlayers.add(newPlayer);
+                            runOnUiThread(() -> {
+                                mPlayersAdapter.notifyDataSetChanged();
+                                Toast.makeText(
+                                        RoomControlActivity.this,
+                                        String.format("New player: %s", newPlayer.getNick()),
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            });
+                            if (mPlayers.size() >= maxPlayersCount
+                                    && mServerThread != null
+                                    && !mServerThread.isInterrupted()) {
+                                mServerThread.interrupt();
+                            }
                         }
                     }
-                }
 
-                @Override
-                public Role getNextPlayerRole() {
-                    return Role.CITIZEN;
+                    @Override
+                    public Role getNextPlayerRole() {
+                        return Role.CITIZEN;
+                    }
                 }
-            }
         );
         mServerThread.start();
     }
@@ -122,7 +140,6 @@ public class RoomControlActivity extends BaseActivity {
                 .replace("{{roomName}}", roomName);
         mRoomHeaderTv.setText(appliedTpl);
     }
-
 
 
     private void setupPlayersRecyclerView() {
