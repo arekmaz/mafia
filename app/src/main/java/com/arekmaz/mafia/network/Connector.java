@@ -29,40 +29,102 @@ public class Connector {
     private final static int PORT = 13378;
 
     public static Thread initServerThread(RoomControlActivity.PlayerActionsCallbacks callbacks) {
-        Thread serverThread = createServerThread(callbacks);
+        Thread serverThread = new ServerThread(callbacks);
         return serverThread;
     }
 
-    private static Thread createServerThread(RoomControlActivity.PlayerActionsCallbacks callbacks) {
-        return new Thread(() -> {
-            Log.d(TAG, "starting server thread");
-            try (ServerSocket server = new ServerSocket(PORT)) {
-                while (true) {
-                    Log.d(TAG, "loop cycle");
-                    Socket client = server.accept();
-                    Log.d(TAG, "connection accepted");
-                    if (client != null) {
-                        Log.d(TAG, "new client connection from " + client.getInetAddress());
-                        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                        Log.d(TAG, "waiting for client message");
-                        String newPlayerNick = in.readLine();
-                        Log.d(TAG, "message from client: " + newPlayerNick);
-                        Role newPlayerRole = callbacks.getNextPlayerRole();
-                        Log.d(TAG, "writing to client: " + newPlayerRole.getRole());
-                        out.println(newPlayerRole.getRole());
-                        in.close();
-                        out.close();
-                        client.close();
-                        String clientIp = client.getInetAddress().toString();
-                        callbacks.onPlayerAdded(new Player(newPlayerNick, newPlayerRole, clientIp));
-                    }
+    public static class ServerThread extends Thread {
+        private static ServerSocket server;
+
+        ServerThread(RoomControlActivity.PlayerActionsCallbacks callbacks) {
+            super(createRun(callbacks));
+        }
+
+        @Override
+        public void interrupt() {
+            super.interrupt();
+            if (server != null) {
+                try {
+                    Log.i(TAG, "closing server from " + getClass().getEnclosingMethod().getName());
+                    server.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        });
+
+        }
+
+        private static Runnable createRun(RoomControlActivity.PlayerActionsCallbacks callbacks) {
+            return () -> {
+                    Log.d(TAG, "starting server thread");
+                try {
+                    server = new ServerSocket(PORT);
+                    while (true) {
+                        Log.d(TAG, "loop cycle");
+                        Socket client = server.accept();
+                        Log.d(TAG, "connection accepted");
+                        if (client != null) {
+                            Log.d(TAG, "new client connection from " + client.getInetAddress());
+                            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                            Log.d(TAG, "waiting for client message");
+                            String newPlayerNick = in.readLine();
+                            Log.d(TAG, "message from client: " + newPlayerNick);
+                            Role newPlayerRole = callbacks.getNextPlayerRole();
+                            Log.d(TAG, "writing to client: " + newPlayerRole.getRole());
+                            out.println(newPlayerRole.getRole());
+                            in.close();
+                            out.close();
+                            client.close();
+                            String clientIp = client.getInetAddress().toString();
+                            callbacks.onPlayerAdded(new Player(newPlayerNick, newPlayerRole, clientIp));
+                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            };
+        }
+
+
+
+
+
+
+
     }
+
+//    private static Thread createServerThread(RoomControlActivity.PlayerActionsCallbacks callbacks) {
+//        return new Thread(() -> {
+//            Log.d(TAG, "starting server thread");
+//            try (ServerSocket server = new ServerSocket(PORT)) {
+//                while (true) {
+//                    Log.d(TAG, "loop cycle");
+//                    Socket client = server.accept();
+//                    Log.d(TAG, "connection accepted");
+//                    if (client != null) {
+//                        Log.d(TAG, "new client connection from " + client.getInetAddress());
+//                        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+//                        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+//                        Log.d(TAG, "waiting for client message");
+//                        String newPlayerNick = in.readLine();
+//                        Log.d(TAG, "message from client: " + newPlayerNick);
+//                        Role newPlayerRole = callbacks.getNextPlayerRole();
+//                        Log.d(TAG, "writing to client: " + newPlayerRole.getRole());
+//                        out.println(newPlayerRole.getRole());
+//                        in.close();
+//                        out.close();
+//                        client.close();
+//                        String clientIp = client.getInetAddress().toString();
+//                        callbacks.onPlayerAdded(new Player(newPlayerNick, newPlayerRole, clientIp));
+//                    }
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//    }
 
     public static Thread initClientThread(ShowGameCharacter.GameCharacterRequestCallbacks callback) {
         Thread clientThread = createClientThread(callback);
